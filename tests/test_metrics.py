@@ -18,7 +18,7 @@ def test_mae_known_example() -> None:
 
 def test_mape_known_example() -> None:
     """MAPE should use the project's percentage definition."""
-    assert calculate_mape([100, 200], [110, 180]) == pytest.approx(8.0)
+    assert calculate_mape([100, 200], [110, 180]) == pytest.approx(10.0)
 
 
 def test_evaluate_forecast_returns_expected_schema() -> None:
@@ -27,4 +27,4 @@ def test_evaluate_forecast_returns_expected_schema() -> None:
     assert result["Model"] == "Example"
     assert result["RMSE"] == pytest.approx(np.sqrt(250))
     assert result["MAE"] == pytest.approx(15.0)
-    assert result["MAPE"] == pytest.approx(8.0)
+    assert result["MAPE"] == pytest.approx(10.0)
