@@ -2,7 +2,9 @@ streamlit
 pandas
 numpy
 matplotlib
+plotly
 scikit-learn
 statsmodels
 xgboost
 joblib
+pytest
