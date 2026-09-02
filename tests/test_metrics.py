@@ -25,6 +25,6 @@ def test_evaluate_forecast_returns_expected_schema() -> None:
     """The combined helper should expose the same metric fields as the notebook."""
     result = evaluate_forecast([100, 200], [110, 180], "Example")
     assert result["Model"] == "Example"
-    assert result["RMSE"] == pytest.approx(np.sqrt(200))
+    assert result["RMSE"] == pytest.approx(np.sqrt(250))
     assert result["MAE"] == pytest.approx(15.0)
     assert result["MAPE"] == pytest.approx(8.0)
