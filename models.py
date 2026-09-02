@@ -1,4 +1,4 @@
-"""Cached model loading and inference helpers for the dashboard."""
+"""Cached model loading, inference, and metric helpers for the dashboard."""
 
 from __future__ import annotations
 
@@ -102,6 +102,37 @@ def sarima_forecast(model: Any, last_date: pd.Timestamp, horizon: int) -> pd.Dat
             "Upper_CI": np.asarray(conf_int.iloc[:, 1]),
         }
     )
+
+
+def calculate_rmse(y_true: Any, y_pred: Any) -> float:
+    """Calculate root mean squared error using the project's metric definition."""
+    actual = np.asarray(y_true)
+    predicted = np.asarray(y_pred)
+    return float(np.sqrt(np.mean((actual - predicted) ** 2)))
+
+
+def calculate_mae(y_true: Any, y_pred: Any) -> float:
+    """Calculate mean absolute error using the project's metric definition."""
+    actual = np.asarray(y_true)
+    predicted = np.asarray(y_pred)
+    return float(np.mean(np.abs(actual - predicted)))
+
+
+def calculate_mape(y_true: Any, y_pred: Any) -> float:
+    """Calculate mean absolute percentage error in percent."""
+    actual = np.asarray(y_true)
+    predicted = np.asarray(y_pred)
+    return float(np.mean(np.abs((actual - predicted) / actual)) * 100)
+
+
+def evaluate_forecast(y_true: Any, y_pred: Any, model_name: str) -> dict[str, float | str]:
+    """Return the project's RMSE, MAE, and MAPE values for a forecast."""
+    return {
+        "Model": model_name,
+        "RMSE": calculate_rmse(y_true, y_pred),
+        "MAE": calculate_mae(y_true, y_pred),
+        "MAPE": calculate_mape(y_true, y_pred),
+    }
 
 
 @st.cache_data
