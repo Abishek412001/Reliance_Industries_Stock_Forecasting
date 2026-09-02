@@ -6,8 +6,6 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-from .common import PREDICTED_COLOR, base_layout
-
 
 def render_evaluation_tab(metrics: pd.DataFrame) -> None:
     """Render the existing model comparison table and error chart."""
@@ -16,11 +14,15 @@ def render_evaluation_tab(metrics: pd.DataFrame) -> None:
 
     fig = go.Figure()
     for metric in ["RMSE", "MAE"]:
-        fig.add_trace(
-            go.Bar(x=metrics.index, y=metrics[metric], name=metric)
-        )
-    fig.update_layout(barmode="group", yaxis_title="Error", xaxis_title="Model")
-    st.plotly_chart(base_layout(fig, "Model Error Comparison", "Error"), use_container_width=True)
+        fig.add_trace(go.Bar(x=metrics.index, y=metrics[metric], name=metric))
+    fig.update_layout(
+        title="Model Error Comparison",
+        barmode="group",
+        yaxis_title="Error",
+        xaxis_title="Model",
+        margin={"l": 20, "r": 20, "t": 50, "b": 20},
+    )
+    st.plotly_chart(fig, use_container_width=True)
 
     st.info(
         "These numbers come from one-step-ahead evaluation, where each "
