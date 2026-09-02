@@ -18,8 +18,21 @@ Predict Reliance Industries' stock closing price over a future horizon (up to 30
 .
 ├── Stocks_model.ipynb              # Full notebook: EDA → preprocessing → modeling → evaluation
 ├── export_artifacts.py             # Run as a final notebook cell to save trained models for deployment
-├── app.py                          # Streamlit dashboard
-├── requirements.txt                # Dependencies
+├── app.py                          # Slim Streamlit entry point; wires data, models, and UI sections
+├── data.py                         # Cached CSV loading, display features, and notebook-matching XGBoost features
+├── models.py                       # Cached artifact loading, inference helpers, and metric utilities
+├── ui/
+│   ├── __init__.py                 # UI package
+│   ├── common.py                   # Shared Plotly styling and time-axis controls
+│   ├── historical.py               # Historical Analysis tab
+│   ├── time_series.py              # Time-Series Analysis tab
+│   ├── evaluation.py               # Model Evaluation tab
+│   └── forecast.py                 # 30-Day Forecast tab and uncertainty visualization
+├── tests/
+│   ├── test_data.py                # Feature-shape and no-leakage tests
+│   └── test_metrics.py             # RMSE/MAE/MAPE tests
+├── .github/workflows/tests.yml     # Pytest CI on main pushes and pull requests
+├── requirements.txt                # Runtime and test dependencies, including Plotly
 ├── Company_stock_prices_clean.csv  # Cleaned data (produced by export_artifacts.py)
 ├── xgb_model.pkl                   # Trained XGBoost model (produced by export_artifacts.py)
 ├── sarima_model.pkl                # Trained SARIMA model (produced by export_artifacts.py)
@@ -65,9 +78,9 @@ XGBoost was the clear winner. SARIMA's selected order collapsed to a random walk
 
 ## Deployment
 
-1. In the notebook, after the modeling cells have run, run `export_artifacts.py` as a final cell. It refits both models on the full dataset and saves everything `app.py` needs.
-2. Place `app.py`, `requirements.txt`, and the exported artifacts in the same folder.
-3. Install dependencies:
+1. In the notebook, after the modeling cells have run, run `export_artifacts.py` as a final cell. It refits the existing models on the full dataset and saves the same artifacts used by the dashboard; this UI refactor does **not** require retraining or a new artifact.
+2. Place `app.py`, `data.py`, `models.py`, the `ui/` package, `requirements.txt`, and the existing exported artifacts in the same project folder.
+3. Install dependencies (including the Plotly dashboard dependency and pytest for CI):
    ```
    pip install -r requirements.txt
    ```
@@ -76,7 +89,7 @@ XGBoost was the clear winner. SARIMA's selected order collapsed to a random walk
    streamlit run app.py
    ```
 
-The dashboard has four tabs: **Historical Analysis**, **Time-Series Analysis** (trend, returns, volatility), **Model Evaluation** (the table above), and **30-Day Forecast** (choose a horizon and model, XGBoost and/or SARIMA).
+The dashboard keeps the four existing drill-down tabs: **Historical Analysis**, **Time-Series Analysis**, **Model Evaluation**, and **30-Day Forecast**. The primary page now starts with a summary strip and data-freshness indicator; model selection, forecast horizon, and historical date range are controlled from the sidebar. Dashboard charts use Plotly for hover details, zooming, and date range sliders.
 
 ## Limitations
 
@@ -87,4 +100,4 @@ The dashboard has four tabs: **Historical Analysis**, **Time-Series Analysis** (
 
 ## Tech Stack
 
-Python, pandas, NumPy, statsmodels (SARIMA), XGBoost, scikit-learn (metrics), Matplotlib, Streamlit
+Python, pandas, NumPy, statsmodels (SARIMA), XGBoost, scikit-learn (metrics), Matplotlib (notebook), Plotly (dashboard), Streamlit, pytest
