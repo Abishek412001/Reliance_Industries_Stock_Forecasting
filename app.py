@@ -1,7 +1,7 @@
 """
 Reliance Industries Stock Price — Interactive Forecasting Dashboard
 Run locally:
-    streamlit run "app (1).py"
+    streamlit run "app.py"
 """
 import os
 import joblib
