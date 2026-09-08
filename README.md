@@ -4,6 +4,8 @@ An enterprise-grade, 100% open-source machine learning and time-series forecasti
 
 Built entirely with open-source technologies (**Python**, **Streamlit**, **FastAPI**, **Scikit-Learn**, **XGBoost**, **LightGBM**, **CatBoost**, **Prophet**, **Statsmodels**, **Plotly**, **Docker**, and **Pytest**).
 
+**Live dashboard:** [Open the Reliance Industries Stock Forecasting app](https://relianceindustriesstockforecasting-hmd7omsfbkdel89xyqthzj.streamlit.app/)
+
 ---
 
 ## 🌟 Architecture & Key Features
@@ -146,6 +148,8 @@ docker-compose up --build
 ## 🚀 Free Hosting Deployment Options ($0 Cost)
 
 ### Option 1: Streamlit Community Cloud (Free)
+**Deployed app:** [relianceindustriesstockforecasting-hmd7omsfbkdel89xyqthzj.streamlit.app](https://relianceindustriesstockforecasting-hmd7omsfbkdel89xyqthzj.streamlit.app/)
+
 1. Push repository to **GitHub**:
    ```bash
    git add .
