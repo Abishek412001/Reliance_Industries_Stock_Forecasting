@@ -1,0 +1,27 @@
+# Python caches and test output
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local environments and secrets
+.venv/
+venv/
+env/
+.env
+.streamlit/secrets.toml
+
+# Build and packaging output
+build/
+dist/
+*.egg-info/
+
+# Notebook and model-training output
+.ipynb_checkpoints/
+catboost_info/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/

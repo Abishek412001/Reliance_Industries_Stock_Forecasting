@@ -1,0 +1,13 @@
+{
+  "ticker": "RELIANCE.NS",
+  "data_start": "2020-10-19",
+  "data_end": "2023-10-16",
+  "test_start": "2022-10-14",
+  "test_end": "2023-10-16",
+  "train_end": "2022-10-13",
+  "horizon": 30,
+  "test_trading_days": 252,
+  "random_seed": 42,
+  "python_version": "3.13.9",
+  "champion_model": "Prophet (No Seasonality)_30D"
+}
